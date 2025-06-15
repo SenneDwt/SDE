@@ -1,62 +1,62 @@
 <!DOCTYPE html>
-<html>
+<html lang="nl">
 <head>
-    <meta charset="utf-8">
-    <title>Contact Form Submission</title>
+    <meta charset="UTF-8">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
             color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
             max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
+            margin: auto;
         }
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 8px 8px 0 0;
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
         }
-        .content {
-            background: #f8f9fa;
-            padding: 20px;
-            border: 1px solid #e9ecef;
+
+        p {
+            line-height: 1.6;
         }
-        .field {
-            margin-bottom: 15px;
+
+        .label {
+            font-weight: bold;
+            color: #555;
         }
-        .field strong {
-            display: inline-block;
-            width: 100px;
-            color: #495057;
+
+        .footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #888;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h2>Nieuw Contact Formulier</h2>
-    </div>
-    
-    <div class="content">
-        <div class="field">
-            <strong>Naam:</strong> {{ $name }}
-        </div>
-        
-        <div class="field">
-            <strong>Email:</strong> {{ $email }}
-        </div>
-        
-        <div class="field">
-            <strong>Onderwerp:</strong> {{ $subject }}
-        </div>
-        
-        <div class="field">
-            <strong>Bericht:</strong>
-        </div>
-        
-        <div style="background: white; padding: 15px; border-radius: 4px; border-left: 4px solid #667eea;">
-            {!! nl2br(e($message)) !!}
+    <div class="container">
+        <h2>Nieuw Contactbericht</h2>
+
+        <p><span class="label">Naam:</span> {{ $name }}</p>
+        <p><span class="label">Email:</span> {{ $email }}</p>
+        <p><span class="label">Onderwerp:</span> {{ $subject }}</p>
+
+        <p><span class="label">Bericht:</span></p>
+        <p>{{ $user_message }}</p>
+
+        <div class="footer">
+            Verzonden via het contactformulier op {{ date('d-m-Y H:i:s') }}
         </div>
     </div>
 </body>

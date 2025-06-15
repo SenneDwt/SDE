@@ -31,35 +31,42 @@ class ContactController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'subject' => $request->subject,
-                'message' => $request->message,
+                'user_message' => $request->message,  // Renamed to avoid conflict
                 'submitted_at' => now()
             ];
 
-            // Try to send email, but don't fail if it doesn't work
-            try {
-                Mail::send('emails.contact', $data, function ($message) use ($data) {
-                    $message->to('Senne@sde-agency.com')
-                            ->subject('Contact Form: ' . $data['subject'])
-                            ->from(config('mail.from.address'), config('mail.from.name'))
-                            ->replyTo($data['email'], $data['name']);
-                });
-                
-                Log::info('Contact form submitted and email sent successfully', $data);
-            } catch (\Exception $mailException) {
-                // Log the email error but don't fail the request
-                Log::error('Email sending failed: ' . $mailException->getMessage());
-                Log::info('Contact form submitted (email failed)', $data);
-            }
+            // Log what we're trying to send
+            Log::info('Attempting to send contact form email', [
+                'to' => 'Senne@sde-agency.com',
+                'from' => config('mail.from.address'),
+                'subject' => 'Contact Form: ' . $data['subject'],
+                'mail_config' => [
+                    'driver' => config('mail.default'),
+                    'host' => config('mail.mailers.smtp.host'),
+                    'port' => config('mail.mailers.smtp.port'),
+                ]
+            ]);
 
-            return response()->json(['success' => true]);
+            // Try to send email
+            Mail::send('emails.contact', $data, function ($message) use ($data) {
+                $message->to('Senne@sde-agency.com')
+                        ->subject('Contact Form: ' . $data['subject'])
+                        ->from(config('mail.from.address'), config('mail.from.name'))
+                        ->replyTo($data['email'], $data['name']);
+            });
+            
+            Log::info('Contact form email sent successfully!');
+            return response()->json(['success' => true, 'debug' => 'Email sent successfully']);
 
         } catch (\Exception $e) {
             // Log the detailed error
             Log::error('Contact form error: ' . $e->getMessage());
+            Log::error('Stack trace: ' . $e->getTraceAsString());
             
             return response()->json([
                 'success' => false,
-                'message' => 'Er is een fout opgetreden bij het verzenden van je bericht.'
+                'message' => 'Er is een fout opgetreden bij het verzenden van je bericht.',
+                'debug' => config('app.debug') ? $e->getMessage() : 'Check Laravel logs for details'
             ], 500);
         }
     }
