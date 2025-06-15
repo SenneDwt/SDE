@@ -2,62 +2,68 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title') - AI Solutions</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Base responsive styles */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Prevent horizontal scroll on mobile */
+        .max-w-7xl {
+            width: 100%;
+            max-width: 80rem;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        
+        @media (min-width: 640px) {
+            .max-w-7xl {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .max-w-7xl {
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
+        }
+        
+        /* Improve touch targets on mobile */
+        @media (max-width: 640px) {
+            button, a {
+                min-height: 44px;
+                min-width: 44px;
+            }
+            
+            input, textarea, select {
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+    </style>
+    @yield('additional_styles')
 </head>
 <body class="bg-gray-50">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-lg">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between h-16">
-                <div class="flex">
-                    <div class="flex-shrink-0 flex items-center">
-                        <a href="/" class="text-2xl font-bold text-blue-600">AI Solutions</a>
-                    </div>
-                    <div class="hidden md:ml-6 md:flex md:space-x-8">
-                        <a href="/" class="inline-flex items-center px-1 pt-1 text-gray-900 hover:text-blue-600">Home</a>
-                        <a href="/about" class="inline-flex items-center px-1 pt-1 text-gray-900 hover:text-blue-600">Over Ons</a>
-                        <a href="/services" class="inline-flex items-center px-1 pt-1 text-gray-900 hover:text-blue-600">Diensten</a>
-                        <a href="/contact" class="inline-flex items-center px-1 pt-1 text-gray-900 hover:text-blue-600">Contact</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
+    @include('layouts.header')
 
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <main class="min-h-screen">
         @yield('content')
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white mt-12">
-        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">AI Solutions</h3>
-                    <p class="text-gray-300">Innovatieve AI-oplossingen voor uw bedrijf</p>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Contact</h3>
-                    <p class="text-gray-300">Email: info@aisolutions.nl</p>
-                    <p class="text-gray-300">Tel: +31 6 12345678</p>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Volg Ons</h3>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-facebook"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-8 border-t border-gray-700 pt-8 text-center">
-                <p class="text-gray-300">&copy; 2024 AI Solutions. Alle rechten voorbehouden.</p>
-            </div>
-        </div>
-    </footer>
+    @include('layouts.footer')
 </body>
 </html> 
