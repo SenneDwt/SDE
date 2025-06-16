@@ -69,6 +69,16 @@
                                 <a href="mailto:Senne@sde-agency.com" class="text-gray-300 hover:text-blue-400 transition-colors">Senne@sde-agency.com</a>
                             </div>
                         </div>
+                        
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-gradient-to-br from-pink-500 to-red-600 rounded-xl flex items-center justify-center mr-4">
+                                <i class="fas fa-map-marker-alt text-xl text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-white">Adres</h4>
+                                <p class="text-gray-300">Lommel, Belgi&euml;</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
